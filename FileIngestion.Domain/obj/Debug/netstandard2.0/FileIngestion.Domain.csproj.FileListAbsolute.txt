@@ -1,0 +1,9 @@
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\bin\Debug\netstandard2.0\FileIngestion.Domain.deps.json
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\bin\Debug\netstandard2.0\FileIngestion.Domain.dll
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\bin\Debug\netstandard2.0\FileIngestion.Domain.pdb
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.csprojAssemblyReference.cache
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.csproj.CoreCompileInputs.cache
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.AssemblyInfoInputs.cache
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.AssemblyInfo.cs
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.dll
+C:\Users\alexk\Documents\Projects\AzureTechSpike\FileIngestion.Domain\obj\Debug\netstandard2.0\FileIngestion.Domain.pdb
