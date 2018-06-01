@@ -16,24 +16,33 @@ namespace FileParser
         private static readonly HttpClient HttpClient = new HttpClient();
 
         [FunctionName("BlobTriggerFileCreation")]
-        public static async Task Run([BlobTrigger("mdap-batch-files/{name}")]Stream myBlob, string name, TraceWriter log)
+        public static async Task Run([BlobTrigger("mdap-batch-files/{name}")]
+            Stream myBlob, string name, TraceWriter log)
         {
             var guid = Guid.NewGuid();
 
-            Log($"Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes", guid, log);
+            try
+            {
+                Log($"Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes", guid, log);
 
-            var stopwatch = Stopwatch.StartNew();
-            var rows = DataParser.ParserFile(myBlob);
+                //var stopwatch = Stopwatch.StartNew();
+                //var rows = DataParser.ParserFile(myBlob);
 
-            Log($"Finished parsing {rows.Count()} row(s) in {stopwatch.ElapsedMilliseconds} ms", guid, log);
+                //Log($"Finished parsing {rows.Count()} row(s) in {stopwatch.ElapsedMilliseconds} ms", guid, log);
 
-            stopwatch.Stop();
+                //stopwatch.Stop();
 
-            var response = await HttpClient.GetAsync("https://fileingestionapi.azurewebsites.net/api/values");
+                var response = await HttpClient.GetAsync($"https://fileingestionapi.azurewebsites.net/api/values/{name}");
 
-            var data = await response.Content.ReadAsStringAsync();
+                var data = await response.Content.ReadAsStringAsync();
 
-            Log($"Response Data: {data}", guid, log);
+                Log($"Response Data: {data}", guid, log);
+            }
+            catch (Exception ex)
+            {
+                log.Error($"{GetLogPrefix(guid)} Error occured during ingestion API invocation: {ex.Message}", ex);
+                throw;
+            }
         }
 
         private static void Log(string message, Guid guid, TraceWriter log)

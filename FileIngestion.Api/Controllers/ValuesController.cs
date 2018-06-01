@@ -1,5 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using FileIngestion.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace FileIngestion.Api.Controllers
 {
@@ -14,10 +20,30 @@ namespace FileIngestion.Api.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{filename}")]
+        public async Task<int> Get(string filename)
         {
-            return "value";
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=batchingestion;AccountKey=9cGevc1Xm2uIUuPLO3eU451ZSJvMwQRCOB9DeMYPjKDo0ON1R/7U1UssbypTs329sHxHENJ7kuOTHuWANHW52Q==;EndpointSuffix=core.windows.net");
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mdap-batch-files");
+
+            // Retrieve reference to a blob named "test.csv"
+            CloudBlockBlob blockBlobReference = container.GetBlockBlobReference(filename);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                //downloads blob's content to a stream
+                await blockBlobReference.DownloadToStreamAsync(memoryStream);
+
+                var rows = DataParser.ParserFile(memoryStream);
+
+                return rows.Count();
+            }
         }
 
         // POST api/values
