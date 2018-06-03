@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FileIngestion.Data.CosmosDb;
 using FileIngestion.Domain;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
@@ -14,6 +15,7 @@ namespace FileParser
     public static class FileCreationHandler
     {
         private static readonly HttpClient HttpClient = new HttpClient();
+        private static readonly IDocumentDbRepository<DataRow> Repository = new DocumentDbRepository<DataRow>();
 
         [FunctionName("BlobTriggerFileCreation")]
         public static async Task Run([BlobTrigger("mdap-batch-files/{name}")]
@@ -25,18 +27,27 @@ namespace FileParser
             {
                 Log($"Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes", guid, log);
 
-                //var stopwatch = Stopwatch.StartNew();
-                //var rows = DataParser.ParserFile(myBlob);
+                var stopwatch = Stopwatch.StartNew();
+                var rows = DataParser.ParserFile(myBlob).ToArray();
 
-                //Log($"Finished parsing {rows.Count()} row(s) in {stopwatch.ElapsedMilliseconds} ms", guid, log);
+                var elapsed = stopwatch.ElapsedMilliseconds;
+                Log($"Finished parsing {rows.Count()} row(s) in {elapsed} ms", guid, log);
 
-                //stopwatch.Stop();
+                var tasks = rows.Select(Repository.CreateItemAsync).ToArray();
 
-                var response = await HttpClient.GetAsync($"https://fileingestionapi.azurewebsites.net/api/values/{name}");
+                await Task.WhenAll(tasks);
 
-                var data = await response.Content.ReadAsStringAsync();
+                stopwatch.Stop();
 
-                Log($"Response Data: {data}", guid, log);
+                Log($"Finished inserting {rows.Count()} row(s) in {stopwatch.ElapsedMilliseconds - elapsed} ms", guid, log);
+
+                Log($"Total execution time {stopwatch.ElapsedMilliseconds} ms", guid, log);
+
+                //var response = await HttpClient.GetAsync($"https://fileingestionapi.azurewebsites.net/api/values/{name}");
+
+                //var data = await response.Content.ReadAsStringAsync();
+
+                //Log($"Response Data: {data}", guid, log);
             }
             catch (Exception ex)
             {
