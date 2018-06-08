@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIngestion.Api", "FileIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIngestion.Domain", "FileIngestion.Domain\FileIngestion.Domain.csproj", "{88875E7B-F50A-4C87-8512-427EF09AD68C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileIngestion.Data.CosmosDb", "FileIngestion.Data.CosmosDb\FileIngestion.Data.CosmosDb.csproj", "{7902D5BF-864A-4D5F-83F2-F4D5FDB830BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileIngestion.Data.CosmosDb", "FileIngestion.Data.CosmosDb\FileIngestion.Data.CosmosDb.csproj", "{7902D5BF-864A-4D5F-83F2-F4D5FDB830BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileParserBatch", "FileParserBatch\FileParserBatch.csproj", "{473A1FBD-70EE-4208-8FBA-5E9CC991BB88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileIngestion.Data.TableStorage", "FileIngestion.Data.TableStorage\FileIngestion.Data.TableStorage.csproj", "{0DA35A6A-3B09-4D09-977A-6E1E10F7B9D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileIngestion.Test", "FileIngestion.Test\FileIngestion.Test.csproj", "{999226E7-05D6-46BC-9EF9-4CA579F2065C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{7902D5BF-864A-4D5F-83F2-F4D5FDB830BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7902D5BF-864A-4D5F-83F2-F4D5FDB830BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7902D5BF-864A-4D5F-83F2-F4D5FDB830BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473A1FBD-70EE-4208-8FBA-5E9CC991BB88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473A1FBD-70EE-4208-8FBA-5E9CC991BB88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473A1FBD-70EE-4208-8FBA-5E9CC991BB88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473A1FBD-70EE-4208-8FBA-5E9CC991BB88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA35A6A-3B09-4D09-977A-6E1E10F7B9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA35A6A-3B09-4D09-977A-6E1E10F7B9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA35A6A-3B09-4D09-977A-6E1E10F7B9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA35A6A-3B09-4D09-977A-6E1E10F7B9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{999226E7-05D6-46BC-9EF9-4CA579F2065C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{999226E7-05D6-46BC-9EF9-4CA579F2065C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{999226E7-05D6-46BC-9EF9-4CA579F2065C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{999226E7-05D6-46BC-9EF9-4CA579F2065C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

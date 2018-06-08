@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -81,6 +82,22 @@ namespace FileIngestion.Data.CosmosDb
         public async Task DeleteItemAsync(string id)
         {
             await _client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
+        }
+
+        private static DocumentCollection GetCollectionIfExists(DocumentClient client, string databaseName, string collectionName)
+        {
+            if (GetDatabaseIfExists(client, databaseName) == null)
+            {
+                return null;
+            }
+
+            return client.CreateDocumentCollectionQuery(UriFactory.CreateDatabaseUri(databaseName))
+                .Where(c => c.Id == collectionName).AsEnumerable().FirstOrDefault();
+        }
+
+        private static Database GetDatabaseIfExists(DocumentClient client, string databaseName)
+        {
+            return client.CreateDatabaseQuery().Where(d => d.Id == databaseName).AsEnumerable().FirstOrDefault();
         }
 
         private async Task CreateDatabaseIfNotExistsAsync()
